@@ -1,10 +1,11 @@
 my lawyers have advised me to clarify that any references to NSFW behavior contained within this source code is strictly extreme hyperbole 
 
 ### Todo:
+#### Done:
+* move all of that stupid bullshit in player.gd to the state machine and clean it up
+* add running state
+* add braking state for slowing down
 #### Near future:
-* ~~move all of that stupid bullshit in player.gd to the state machine and clean it up~~ DONE
-* ~~add running state~~ DONE
-* ~~add braking state for slowing down~~ DONE~
 * add a boost meter
 * create an object to test environmental velocity on the player character
 #### Later:
