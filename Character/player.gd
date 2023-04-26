@@ -43,12 +43,3 @@ func update_facing_direction():
 		sprite.flip_h = false
 	elif direction.x < 0:
 		sprite.flip_h = true
-		
-
-func dumb_float(inputf):
-	if inputf == 0:
-		return 0
-	elif inputf > 0:
-		return 1
-	elif inputf < 0:
-		return -1

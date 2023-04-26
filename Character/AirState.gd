@@ -21,7 +21,7 @@ func state_process(delta):
 		# cuts your current velocity by 3/4 so that it's not super jarring
 			character.local_velocity.x /= 4
 		# apply normal momentum rules
-		character.local_velocity.x = move_toward(character.local_velocity.x, character.local_velocity_cap*dumb_float(direction.x), character.speed)
+		character.local_velocity.x = move_toward(character.local_velocity.x, character.local_velocity_cap*sign(direction.x), character.speed)
 
 func state_input(event : InputEvent):
 	if (event.is_action_pressed("jump") && !has_double_jumped):
