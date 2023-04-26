@@ -25,25 +25,9 @@ func _physics_process(delta):
 	# THE GREAT MOMENTUM ADVENTURE
 	if direction.x != 0 && state_machine.check_if_can_move():
 		if !is_on_floor():
-			# clusterfuck of a line that determines if we're holding the opposite direction
-			if (local_velocity.x < 0 and dumb_float(direction.x) == 1) or (local_velocity.x > 0 and dumb_float(direction.x) == -1):
-				# flips your current velocity so you can change direction on a dime
-				local_velocity.x *= -1
-				# cuts your current velocity by 3/4 so that it's not super jarring
-				local_velocity.x /= 4
-			# apply normal momentum rules
-			local_velocity.x = move_toward(local_velocity.x, local_velocity_cap*dumb_float(direction.x), speed)
-		else:
-			# grounded "check if we're holding the opposite direction
-			if (local_velocity.x < 0 and dumb_float(direction.x) == 1) or (local_velocity.x > 0 and dumb_float(direction.x) == -1):
-				local_velocity.x = move_toward(local_velocity.x, 0, friction)
-			else:
-				# let us move normally ffs
-				local_velocity.x = move_toward(local_velocity.x, local_velocity_cap*dumb_float(direction.x), speed)
-	else:
-#		if (local_velocity.x < 0 and sprite.flip_h == false) or (local_velocity.x > 0 and sprite.flip_h == true):
-		local_velocity.x = move_toward(local_velocity.x, 0, friction)
+			pass
 	
+	# environmental velocity is controlled by objects in the environment, such as speed boosters, and naturally slows down
 	environmental_velocity.x = move_toward(environmental_velocity.x, 0, friction)
 	
 	velocity = local_velocity + environmental_velocity

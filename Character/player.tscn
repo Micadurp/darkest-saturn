@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://xxaoff7gwbrm"]
+[gd_scene load_steps=37 format=3 uid="uid://xxaoff7gwbrm"]
 
 [ext_resource type="Script" path="res://Character/player.gd" id="1_flj5s"]
 [ext_resource type="Texture2D" uid="uid://cf5vr3rdkcdr0" path="res://Art/Legacy-Fantasy - High Forest 2.3/Character/Idle/Idle-Sheet.png" id="1_uohqy"]
@@ -10,6 +10,9 @@
 [ext_resource type="Script" path="res://Character/AirState.gd" id="6_stw0j"]
 [ext_resource type="Script" path="res://Character/LandingState.gd" id="7_pmf6r"]
 [ext_resource type="Script" path="res://Character/StateDebugLabel.gd" id="8_viysk"]
+[ext_resource type="Script" path="res://Character/BrakingState.gd" id="10_fixu3"]
+[ext_resource type="Script" path="res://Character/RunningState.gd" id="11_22h3l"]
+[ext_resource type="Script" path="res://Character/SlidingState.gd" id="12_skwc6"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ry2ya"]
 radius = 8.0
@@ -68,7 +71,7 @@ states/jump_end/position = Vector2(577, 100)
 states/jump_start/node = SubResource("AnimationNodeAnimation_dnr6n")
 states/jump_start/position = Vector2(384, 28)
 transitions = ["Start", "Move", SubResource("AnimationNodeStateMachineTransition_lxsv4"), "Move", "jump_start", SubResource("AnimationNodeStateMachineTransition_1sfml"), "jump_start", "jump_end", SubResource("AnimationNodeStateMachineTransition_b1nfh"), "jump_end", "Move", SubResource("AnimationNodeStateMachineTransition_tg6fe"), "jump_start", "double_jump", SubResource("AnimationNodeStateMachineTransition_58qw4"), "double_jump", "jump_end", SubResource("AnimationNodeStateMachineTransition_8d4hg")]
-graph_offset = Vector2(0, -58.4595)
+graph_offset = Vector2(0, 4.90892)
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_s78qn"]
 
@@ -331,7 +334,7 @@ libraries = {
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(-36, -40)
-texture = ExtResource("1_uohqy")
+texture = ExtResource("2_c1ij0")
 centered = false
 offset = Vector2(5, 0)
 
@@ -350,10 +353,27 @@ running_state = NodePath("../Running")
 script = ExtResource("6_stw0j")
 landing_state = NodePath("../Landing")
 
-[node name="Landing" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("ground_state")]
+[node name="Landing" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("ground_state", "braking_state", "running_state")]
 script = ExtResource("7_pmf6r")
 ground_state = NodePath("../Ground")
+braking_state = NodePath("../Braking")
+running_state = NodePath("../Running")
 can_move = false
+
+[node name="Braking" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("air_state", "running_state", "ground_state")]
+script = ExtResource("10_fixu3")
+air_state = NodePath("../Air")
+running_state = NodePath("../Running")
+ground_state = NodePath("../Ground")
+
+[node name="Running" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("air_state", "ground_state", "braking_state")]
+script = ExtResource("11_22h3l")
+air_state = NodePath("../Air")
+ground_state = NodePath("../Ground")
+braking_state = NodePath("../Braking")
+
+[node name="Sliding" type="Node" parent="CharacterStateMachine"]
+script = ExtResource("12_skwc6")
 
 [node name="StateDebugLabel" type="Label" parent="." node_paths=PackedStringArray("state_machine")]
 offset_left = -53.0
@@ -363,12 +383,5 @@ offset_bottom = -23.0
 text = "State: "
 script = ExtResource("8_viysk")
 state_machine = NodePath("../CharacterStateMachine")
-
-[node name="Label" type="Label" parent="."]
-offset_left = -5.0
-offset_top = -13.0
-offset_right = 5.0
-offset_bottom = 13.0
-text = "X"
 
 [connection signal="animation_finished" from="AnimationTree" to="CharacterStateMachine/Landing" method="_on_animation_tree_animation_finished"]
