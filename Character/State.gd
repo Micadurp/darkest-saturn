@@ -25,15 +25,6 @@ func on_enter():
 func on_exit():
 	pass
 
-# takes a float and forces it to just be a 1 or -1 to be multiplied
-func dumb_float(inputf):
-	if inputf == 0:
-		return 0
-	elif inputf > 0:
-		return 1
-	elif inputf < 0:
-		return -1
-
 # Forces a number to be converted to negative
 func force_negative(nval):
 	if nval < 0:

@@ -14,7 +14,7 @@ func state_process(delta):
 	else:
 		# check if we're pressing anything and transition into running
 		if direction.x != 0:
-			character.local_velocity.x = move_toward(character.local_velocity.x, character.local_velocity_cap*dumb_float(direction.x), character.speed)
+			character.local_velocity.x = move_toward(character.local_velocity.x, character.local_velocity_cap*sign(direction.x), character.speed)
 			next_state = running_state
 			playback.travel("running")
 
