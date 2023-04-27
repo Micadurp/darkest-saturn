@@ -7,8 +7,7 @@ class_name AirState
 
 var has_double_jumped = false
 
-func state_process(delta):
-	direction = Input.get_vector("left", "right", "up", "down")
+func state_process(delta, direction):
 	if(character.is_on_floor()):
 		character.local_velocity.y = 0
 		next_state = landing_state

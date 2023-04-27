@@ -7,8 +7,7 @@ class_name RunningState
 @export var ground_state : State
 @export var braking_state : State
 
-func state_process(delta):
-	direction = Input.get_vector("left", "right", "up", "down")
+func state_process(delta, direction):
 	# you air be in the shouldn't!
 	if(!character.is_on_floor()):
 		next_state = air_state

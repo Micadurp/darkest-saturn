@@ -8,7 +8,6 @@ extends CharacterBody2D
 @onready var state_machine : CharacterStateMachine = $CharacterStateMachine
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
-var direction : Vector2 = Vector2.ZERO
 var local_velocity : Vector2 = Vector2.ZERO
 var environmental_velocity : Vector2 = Vector2.ZERO
 # true for right, false for left
@@ -18,9 +17,7 @@ func _ready():
 	animation_tree.active = true
 
 func _physics_process(delta):
-	# I would give some ferocious head for some guidance on how to move this into the state machine
-	# oh my fucking god this is so bad
-	direction = Input.get_vector("left", "right", "up", "down")
+	var direction = state_machine.get_input_direction()
 	
 	# THE GREAT MOMENTUM ADVENTURE
 	if direction.x != 0 && state_machine.check_if_can_move():
@@ -32,13 +29,13 @@ func _physics_process(delta):
 	
 	velocity = local_velocity + environmental_velocity
 	move_and_slide()
-	update_animation()
-	update_facing_direction()
+	update_animation(direction)
+	update_facing_direction(direction)
 	
-func update_animation():
+func update_animation(direction):
 	animation_tree.set("parameters/Move/blend_position", direction.x)
 
-func update_facing_direction():
+func update_facing_direction(direction):
 	if direction.x > 0:
 		sprite.flip_h = false
 	elif direction.x < 0:

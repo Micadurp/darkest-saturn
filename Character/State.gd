@@ -6,12 +6,11 @@ class_name State
 var next_state : State
 @export var can_move : bool = true
 var playback : AnimationNodeStateMachinePlayback
-var direction : Vector2
 @onready var state_machine : CharacterStateMachine = $CharacterStateMachine
 
 # set up processes for other states to inherit
 
-func state_process(delta):
+func state_process(delta, direction):
 	pass
 
 func state_input(event : InputEvent):
