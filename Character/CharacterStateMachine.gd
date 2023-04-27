@@ -26,11 +26,11 @@ func _physics_process(delta):
 	if (current_state.next_state != null):
 		switch_states(current_state.next_state)
 	
-	current_state.state_process(delta)
+	current_state.state_process(delta, character.input_direction)
 
 func check_if_can_move():
 	return current_state.can_move
-
+	
 func switch_states(new_state : State):
 	if (current_state != null):
 		# Calls exit functions
