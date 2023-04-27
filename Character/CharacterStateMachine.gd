@@ -7,7 +7,6 @@ class_name CharacterStateMachine
 @export var animation_tree : AnimationTree
 
 var states : Array[State]
-var input_direction : Vector2
 
 func _ready():
 	# Checks every child Node (ex. Ground, Air, Landing...)
@@ -27,16 +26,11 @@ func _physics_process(delta):
 	if (current_state.next_state != null):
 		switch_states(current_state.next_state)
 	
-	input_direction = Input.get_vector("left", "right", "up", "down")
-	
-	current_state.state_process(delta, input_direction)
+	current_state.state_process(delta, character.input_direction)
 
 func check_if_can_move():
 	return current_state.can_move
 	
-func get_input_direction():
-	return input_direction
-
 func switch_states(new_state : State):
 	if (current_state != null):
 		# Calls exit functions
