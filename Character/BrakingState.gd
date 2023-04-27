@@ -5,7 +5,7 @@ extends State
 @export var running_state : State
 @export var ground_state : State
 
-func state_process(delta, direction):
+func state_process(_delta, direction):
 	# you shouldn't be in the air!
 	if(!character.is_on_floor()):
 		next_state = air_state

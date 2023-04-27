@@ -10,10 +10,10 @@ var playback : AnimationNodeStateMachinePlayback
 
 # set up processes for other states to inherit
 
-func state_process(delta, direction):
+func state_process(_delta, _direction):
 	pass
 
-func state_input(event : InputEvent):
+func state_input(_event : InputEvent):
 	pass
 
 # what to do when the state is entered
