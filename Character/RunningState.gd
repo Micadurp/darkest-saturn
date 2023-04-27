@@ -29,7 +29,7 @@ func state_process(delta, direction):
 				playback.travel("idle")
 
 func state_input(event : InputEvent):
-	if Input.is_action_pressed("jump"):
+	if event.is_action_pressed("jump"):
 		jump()
 	
 func jump():

@@ -29,7 +29,7 @@ func state_process(delta, direction):
 				character.local_velocity.x = move_toward(character.local_velocity.x, 0, character.friction*2)
 
 func state_input(event : InputEvent):
-	if Input.is_action_pressed("jump"):
+	if event.is_action_pressed("jump"):
 		jump()
 
 func jump():
