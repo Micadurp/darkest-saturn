@@ -17,7 +17,7 @@ var moving_direction : bool = true
 func _ready():
 	animation_tree.active = true
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	input_direction = Input.get_vector("left", "right", "up", "down")
 	
 	# THE GREAT MOMENTUM ADVENTURE

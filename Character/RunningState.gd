@@ -7,7 +7,7 @@ class_name RunningState
 @export var ground_state : State
 @export var braking_state : State
 
-func state_process(delta, direction):
+func state_process(_delta, direction):
 	# you air be in the shouldn't!
 	if(!character.is_on_floor()):
 		next_state = air_state
@@ -29,7 +29,7 @@ func state_process(delta, direction):
 				playback.travel("idle")
 
 func state_input(event : InputEvent):
-	if Input.is_action_pressed("jump"):
+	if event.is_action_pressed("jump"):
 		jump()
 	
 func jump():

@@ -6,7 +6,7 @@ class_name GroundState
 @export var air_state : State
 @export var running_state : State
 
-func state_process(delta, direction):
+func state_process(_delta, direction):
 	# you shouldn't be in the air!
 	if(!character.is_on_floor()):
 		next_state = air_state
@@ -18,7 +18,7 @@ func state_process(delta, direction):
 			playback.travel("running")
 
 func state_input(event : InputEvent):
-	if Input.is_action_pressed("jump"):
+	if event.is_action_pressed("jump"):
 		jump()
 	
 
