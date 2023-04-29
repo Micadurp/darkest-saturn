@@ -375,13 +375,13 @@ braking_state = NodePath("../Braking")
 [node name="Sliding" type="Node" parent="CharacterStateMachine"]
 script = ExtResource("12_skwc6")
 
-[node name="StateDebugLabel" type="Label" parent="." node_paths=PackedStringArray("state_machine")]
+[node name="StateDebugLabel" type="Label" parent="." node_paths=PackedStringArray("state_machine", "character")]
 offset_left = -53.0
 offset_top = -49.0
 offset_right = 53.0
 offset_bottom = -23.0
-text = "State: "
 script = ExtResource("8_viysk")
 state_machine = NodePath("../CharacterStateMachine")
+character = NodePath("..")
 
 [connection signal="animation_finished" from="AnimationTree" to="CharacterStateMachine/Landing" method="_on_animation_tree_animation_finished"]

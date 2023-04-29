@@ -1,12 +1,16 @@
 extends CharacterBody2D
 
-@export var speed : float = 5
-@export var friction : float = 7
+@export var speed : float = 10
+@export var friction : float = 3
 @export var local_velocity_cap : float = 250
 @onready var sprite : Sprite2D = $Sprite2D
 @onready var animation_tree : AnimationTree = $AnimationTree
 @onready var state_machine : CharacterStateMachine = $CharacterStateMachine
 # Get the gravity from the project settings to be synced with RigidBody nodes.
+var boost_limit : float = 3
+var boost_height : float = 125
+var boost_guage : float = 0 
+var boost_velocity : float = 250
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var input_direction : Vector2
 var local_velocity : Vector2 = Vector2.ZERO
@@ -20,10 +24,14 @@ func _ready():
 func _physics_process(_delta):
 	input_direction = Input.get_vector("left", "right", "up", "down")
 	
-	# THE GREAT MOMENTUM ADVENTURE
+	# unused, might be useful later
 	if input_direction.x != 0 && state_machine.check_if_can_move():
 		if !is_on_floor():
 			pass
+	
+	if is_on_floor():
+		if boost_guage < 3:
+			boost_guage = 3
 	
 	# environmental velocity is controlled by objects in the environment, such as speed boosters, and naturally slows down
 	environmental_velocity.x = move_toward(environmental_velocity.x, 0, friction)
