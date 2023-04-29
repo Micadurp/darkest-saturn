@@ -38,11 +38,10 @@ func double_jump():
 	playback.travel("double_jump")
 
 func boost():
-	var direction : Vector2 = Input.get_vector("left", "right", "up", "down")
 	character.boost_guage -= 3
 	if character.local_velocity.y >= 0:
 		character.local_velocity.y = 0
-	if (direction.x * character.local_velocity.x < 0):
+	if (character.input_direction.x * character.local_velocity.x < 0):
 		character.local_velocity.x *= -1
-	character.local_velocity.x += sign(direction.x) * character.boost_velocity
+	character.local_velocity.x += sign(character.input_direction.x) * character.boost_velocity
 	character.local_velocity.y = -character.boost_height
