@@ -14,19 +14,20 @@ func state_process(_delta, direction):
 	else:
 		if direction.x != 0:
 			# check if we're pressing the opposite direction and start braking
-			if (direction.x * character.local_velocity.x < 0):
-				next_state = braking_state
+			#if (direction.x * character.local_velocity.x < 0):
+				#next_state = braking_state
 			# apply velocity
-			else:
-				character.local_velocity.x = move_toward(character.local_velocity.x, character.local_velocity_cap*sign(direction.x), character.speed)
+			#else:
+			#character.local_velocity.x = move_toward(character.local_velocity.x, character.local_velocity_cap*sign(direction.x), character.speed*2)
+			character.local_velocity.x = character.speed*sign(direction.x)
 		# if we're not pressing anything, go into idle if we're not doing anything, or go into braking if we are
 		elif direction.x == 0:
-			if character.velocity.x == 0:
-				next_state = ground_state
-				playback.travel("idle")
-			else:
-				next_state = braking_state
-				playback.travel("idle")
+			#if character.velocity.x == 0:
+			next_state = ground_state
+			playback.travel("idle")
+			#else:
+				#next_state = braking_state
+				#playback.travel("idle")
 
 func state_input(event : InputEvent):
 	if event.is_action_pressed("jump"):

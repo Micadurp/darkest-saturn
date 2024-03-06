@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
-@export var speed : float = 10
-@export var friction : float = 3
+@export var speed : float = 100
+@export var friction : float = 5
 @export var local_velocity_cap : float = 250
 @onready var sprite : Sprite2D = $Sprite2D
 @onready var animation_tree : AnimationTree = $AnimationTree
