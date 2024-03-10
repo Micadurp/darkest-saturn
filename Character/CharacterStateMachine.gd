@@ -35,11 +35,10 @@ func switch_states(new_state : State):
 	if (current_state != null):
 		# Calls exit functions
 		current_state.on_exit()
-		# Making sure it doesn't immediately try to switch into the same state AGAIN
+		# Making sure it doesn't immediately try https://github.com/coatlessali/darkest-saturnto switch into the same state AGAIN
 		current_state.next_state = null
 	# The great switching of states occurs
 	current_state = new_state
-	
 	# Calls enter functions for new state
 	current_state.on_enter()
 

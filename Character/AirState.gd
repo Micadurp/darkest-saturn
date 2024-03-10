@@ -29,6 +29,8 @@ func state_input(event : InputEvent):
 		#double_jump()
 	#elif (event.is_action_pressed("boost")) and character.boost_guage >= 3:
 		#boost()
+	if event.is_action_released("jump") && character.local_velocity.y  < 0:
+		character.local_velocity.y = 0
 	pass
 
 func on_exit():

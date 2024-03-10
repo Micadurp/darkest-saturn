@@ -278,7 +278,7 @@ advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_l4wj4"]
 states/Move/node = SubResource("AnimationNodeBlendSpace1D_6xqml")
-states/Move/position = Vector2(382, 100)
+states/Move/position = Vector2(390, 100)
 states/Start/position = Vector2(199, 100)
 transitions = ["Start", "Move", SubResource("AnimationNodeStateMachineTransition_lxsv4")]
 graph_offset = Vector2(-44, -36.0911)
@@ -315,30 +315,36 @@ character = NodePath("..")
 current_state = NodePath("Ground")
 animation_tree = NodePath("../AnimationTree")
 
-[node name="Ground" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("air_state", "running_state")]
+[node name="Ground" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("air_state", "running_state", "slide_state")]
 script = ExtResource("5_kqs0o")
 air_state = NodePath("../Air")
 running_state = NodePath("../Running")
+slide_state = NodePath("../Sliding")
 
 [node name="Air" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("ground_state", "character")]
 script = ExtResource("6_stw0j")
 ground_state = NodePath("../Ground")
 character = NodePath("../..")
 
-[node name="Running" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("air_state", "ground_state", "braking_state")]
+[node name="Running" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("air_state", "ground_state", "slide_state")]
 script = ExtResource("11_22h3l")
 air_state = NodePath("../Air")
 ground_state = NodePath("../Ground")
-braking_state = NodePath("")
+slide_state = NodePath("../Sliding")
 
-[node name="Sliding" type="Node" parent="CharacterStateMachine"]
+[node name="Sliding" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("air_state", "running_state", "slide_state", "ground_state")]
 script = ExtResource("12_skwc6")
+air_state = NodePath("../Air")
+running_state = NodePath("../Running")
+slide_state = NodePath(".")
+ground_state = NodePath("../Ground")
 
 [node name="StateDebugLabel" type="Label" parent="." node_paths=PackedStringArray("state_machine", "character")]
 offset_left = -53.0
 offset_top = -49.0
 offset_right = 53.0
 offset_bottom = -23.0
+scale = Vector2(0.75394, 0.820863)
 script = ExtResource("8_viysk")
 state_machine = NodePath("../CharacterStateMachine")
 character = NodePath("..")

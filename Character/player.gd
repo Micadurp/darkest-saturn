@@ -17,21 +17,27 @@ var local_velocity : Vector2 = Vector2.ZERO
 var environmental_velocity : Vector2 = Vector2.ZERO
 # true for right, false for left
 var moving_direction : bool = true
+var last_faced : int = 1
 
 func _ready():
+	print("haiiii uwu funne megaman game is a go!!!")
 	animation_tree.active = true
 
 func _physics_process(_delta):
+	#print(last_faced)
 	input_direction = Input.get_vector("left", "right", "up", "down")
 	
 	# unused, might be useful later
 	if input_direction.x != 0 && state_machine.check_if_can_move():
+		if input_direction.x > 0:
+			last_faced = 1
+		elif input_direction.x < 0:
+			last_faced = -1
 		if !is_on_floor():
 			pass
 	
 	if is_on_floor():
-		if boost_guage < 3:
-			boost_guage = 3
+		pass
 	
 	# environmental velocity is controlled by objects in the environment, such as speed boosters, and naturally slows down
 	environmental_velocity.x = move_toward(environmental_velocity.x, 0, friction)
