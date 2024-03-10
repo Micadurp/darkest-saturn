@@ -3,7 +3,7 @@ extends State
 class_name GroundState
 
 # CHECK RUNNING STATE JUMP VELOCITY
-@export var jump_velocity : float = -200.0
+@export var jump_velocity : float = -225.0
 @export var slide_velocity : float = 200
 @export var air_state : State
 @export var running_state : State

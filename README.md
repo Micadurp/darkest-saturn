@@ -9,13 +9,12 @@ Darkest Saturn is the working title for an upcoming Rockman fan game.
 * add running state
 * add jumping state
 * pray that someone is willing to compose the music
-#### Near future:
-* fix the stupid fucking animationtree not doing the god damned thing it's supposed to
 * finish reverting the movement back to rm4 style movement
-* replace all of the sprites with Jay Eazy's favorite boi
-#### Later:
+#### Near future:
 * add buster
 * make buster work in all states
+* fix the stupid fucking animationtree not doing the god damned thing it's supposed to
+#### Later:
 * add an enemy to fight
 * add an attack for that enemy
 #### Just a bit Later:
@@ -27,7 +26,7 @@ Darkest Saturn is the working title for an upcoming Rockman fan game.
 * Support for 16:9, 4:3, and 16:10
 * Support for 240p (for use with CRT displays)
 * Support for 240p super resolutions (for use with CRT displays via HDMI adapters)
-#### this game is never coming out
+#### I was never book smart, I'm money smart
 * write the story
 * create art for all needed contexts
 * create sound design
