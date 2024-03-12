@@ -1,3 +1,5 @@
+# TODO: add fire, make it transition to ground state immediately
+
 extends State
 
 class_name RunningState

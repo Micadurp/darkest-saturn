@@ -18,6 +18,7 @@ var environmental_velocity : Vector2 = Vector2.ZERO
 # true for right, false for left
 var moving_direction : bool = true
 var last_faced : int = 1
+var owie : bool = false
 
 func _ready():
 	print("haiiii uwu funne megaman game is a go!!!")

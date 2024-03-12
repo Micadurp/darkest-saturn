@@ -283,7 +283,7 @@ states/Start/position = Vector2(199, 100)
 transitions = ["Start", "Move", SubResource("AnimationNodeStateMachineTransition_lxsv4")]
 graph_offset = Vector2(-44, -36.0911)
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["Bullets"]]
 script = ExtResource("1_flj5s")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -321,10 +321,9 @@ air_state = NodePath("../Air")
 running_state = NodePath("../Running")
 slide_state = NodePath("../Sliding")
 
-[node name="Air" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("ground_state", "character")]
+[node name="Air" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("ground_state")]
 script = ExtResource("6_stw0j")
 ground_state = NodePath("../Ground")
-character = NodePath("../..")
 
 [node name="Running" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("air_state", "ground_state", "slide_state")]
 script = ExtResource("11_22h3l")

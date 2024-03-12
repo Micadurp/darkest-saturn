@@ -10,8 +10,11 @@ Darkest Saturn is the working title for an upcoming Rockman fan game.
 * add jumping state
 * pray that someone is willing to compose the music
 * finish reverting the movement back to rm4 style movement
-#### Near future:
 * add buster
+#### Near future:
+* make buster despawn
+* make buster collide with enemies
+* make buster only provide 3 projectiles at a time
 * make buster work in all states
 * fix the stupid fucking animationtree not doing the god damned thing it's supposed to
 #### Later:
