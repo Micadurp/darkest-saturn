@@ -8,6 +8,7 @@ class_name GroundState
 @export var air_state : State
 @export var running_state : State
 @export var slide_state : State
+@export var runstart_state : State
 
 func state_process(_delta, direction):
 	# you shouldn't be in the air!
@@ -18,8 +19,8 @@ func state_process(_delta, direction):
 		# check if we're pressing anything and transition into running
 		if direction.x != 0:
 			#character.local_velocity.x = move_toward(character.local_velocity.x, character.local_velocity_cap*sign(direction.x), character.speed)
-			character.local_velocity.x = character.speed*sign(direction.x) 
-			next_state = running_state
+			character.local_velocity.x = character.speed*sign(direction.x/2) 
+			next_state = runstart_state
 			playback.travel("running")
 		else:
 			character.local_velocity.x = 0
@@ -40,7 +41,7 @@ func state_input(event : InputEvent):
 	
 
 func jump():
-	character.local_velocity.y = jump_velocity
+	character.local_velocity.y = character.jump_velocity
 	next_state = air_state
 	playback.travel("jump_end")
 

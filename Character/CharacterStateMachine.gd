@@ -14,7 +14,6 @@ func _ready():
 		# Adds child to the array above, assuming it's a State
 		if(child is State):
 			states.append(child)
-			
 			# Set states up for what they need to function
 		# There shouldn't be any children that aren't states.
 			child.character = character

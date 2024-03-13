@@ -1,16 +1,13 @@
 extends CharacterBody2D
 
-@export var speed : float = 100
+@export var speed : float = 120
 @export var friction : float = 5
 @export var local_velocity_cap : float = 250
 @onready var sprite : Sprite2D = $Sprite2D
 @onready var animation_tree : AnimationTree = $AnimationTree
 @onready var state_machine : CharacterStateMachine = $CharacterStateMachine
 # Get the gravity from the project settings to be synced with RigidBody nodes.
-var boost_limit : float = 3
-var boost_height : float = 125
-var boost_guage : float = 0 
-var boost_velocity : float = 250
+@export var jump_velocity : float
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var input_direction : Vector2
 var local_velocity : Vector2 = Vector2.ZERO
@@ -21,7 +18,7 @@ var last_faced : int = 1
 var owie : bool = false
 
 func _ready():
-	print("haiiii uwu funne megaman game is a go!!!")
+	print("i was never book smart, im money smart")
 	animation_tree.active = true
 
 func _physics_process(_delta):

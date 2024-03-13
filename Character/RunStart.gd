@@ -1,41 +1,42 @@
 extends State
 
-# TODO: implement this
-class_name SlideState
-
-# CHECK RUNNING STATE JUMP VELOCITY
-@export var jump_velocity : float = -200.0
+class_name RunStart
+@export var jump_velocity : float = -225.0
 @export var slide_velocity : float = 200
 @export var air_state : State
 @export var running_state : State
 @export var slide_state : State
 @export var ground_state : State
-@export var runstart_state : State
-@export var timer : int = 69
-@export var slide_dir : int = 1
+@export var default_pause_frames : int = 3
+var pause_frames : int = 30
+
+func on_enter():
+	pause_frames = default_pause_frames
 
 func state_process(_delta, direction):
-	# you shouldn't be in the air!
+	# you air be in the shouldn't!
 	if(!character.is_on_floor()):
 		next_state = air_state
 	else:
-		timer -= 1
-		# check if we're pressing anything and transition into running
-		if timer <= 0:
-			if sign(direction.x)*slide_dir == 1:
+		pause_frames -= 1
+		if direction.x != 0:
+			# check if we're pressing the opposite direction and start braking
+			#if (direction.x * character.local_velocity.x < 0):
+				#next_state = braking_state
+			# apply velocity
+			#else:
+			#character.local_velocity.x = move_toward(character.local_velocity.x, character.local_velocity_cap*sign(direction.x), character.speed*2)
+			character.local_velocity.x = character.speed/2*sign(direction.x)
+			if pause_frames <= 0:
 				next_state = running_state
-			else:
-				next_state = ground_state
-				playback.travel("idle")
-		# checking if pressing opposite direction
-		#print(sign(direction.x)*sign(character.last_faced))
-		if sign(direction.x)*slide_dir == -1:
-			#character.local_velocity.x = move_toward(character.local_velocity.x, character.local_velocity_cap*sign(direction.x), character.speed)
-			#character.local_velocity.x = slide_velocity*sign(direction.x) 
+		# if we're not pressing anything, go into idle if we're not doing anything, or go into braking if we are
+		elif direction.x == 0:
+			#if character.velocity.x == 0:
 			next_state = ground_state
 			playback.travel("idle")
-		else:
-			character.local_velocity.x = slide_velocity*sign(character.last_faced)
+			#else:
+				#next_state = braking_state
+				#playback.travel("idle")
 
 func state_input(event : InputEvent):
 	if event.is_action_pressed("jump"):
@@ -51,17 +52,12 @@ func state_input(event : InputEvent):
 			fire_funne = 3.1415926536
 		fire(fire_funne)
 	
-func on_enter():
-	timer = 30
-	slide_dir = character.last_faced
-	#print(sign(slide_dir))
-
 func jump():
 	character.local_velocity.y = character.jump_velocity
 	next_state = air_state
-	playback.travel("jump_end")
+	playback.travel("jump_start")
 
-func slide(): # Do we wanna remove this???
+func slide():
 	character.local_velocity.x = slide_velocity*sign(character.last_faced)
 	next_state = slide_state
 
@@ -70,4 +66,4 @@ func fire(angle):
 	var bullet = load("Bullet.tscn").instantiate()
 	bullet.direction = direction
 	get_parent().add_child(bullet)
-	bullet.position = character.position + Vector2(0, -10)
+	bullet.position = character.position + Vector2(character.last_faced*20, -10)
