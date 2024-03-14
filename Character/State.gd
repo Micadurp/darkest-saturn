@@ -4,6 +4,7 @@ class_name State
 
 @export var character : CharacterBody2D
 var next_state : State
+var last_state : State
 @export var can_move : bool = true
 var playback : AnimationNodeStateMachinePlayback
 @onready var state_machine : CharacterStateMachine = $CharacterStateMachine

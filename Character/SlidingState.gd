@@ -5,7 +5,6 @@ class_name SlideState
 
 # CHECK RUNNING STATE JUMP VELOCITY
 @export var jump_velocity : float = -200.0
-@export var slide_velocity : float = 200
 @export var air_state : State
 @export var running_state : State
 @export var slide_state : State
@@ -16,6 +15,8 @@ class_name SlideState
 
 func state_process(_delta, direction):
 	# you shouldn't be in the air!
+	#if last_state != null:
+		#dsprint(last_state)
 	if(!character.is_on_floor()):
 		next_state = air_state
 	else:
@@ -35,7 +36,7 @@ func state_process(_delta, direction):
 			next_state = ground_state
 			playback.travel("idle")
 		else:
-			character.local_velocity.x = slide_velocity*sign(character.last_faced)
+			character.local_velocity.x = character.slide_velocity*sign(character.last_faced)
 
 func state_input(event : InputEvent):
 	if event.is_action_pressed("jump"):
@@ -54,7 +55,6 @@ func state_input(event : InputEvent):
 func on_enter():
 	timer = 30
 	slide_dir = character.last_faced
-	#print(sign(slide_dir))
 
 func jump():
 	character.local_velocity.y = character.jump_velocity
@@ -62,7 +62,7 @@ func jump():
 	playback.travel("jump_end")
 
 func slide(): # Do we wanna remove this???
-	character.local_velocity.x = slide_velocity*sign(character.last_faced)
+	character.local_velocity.x = character.slide_velocity*sign(character.last_faced)
 	next_state = slide_state
 
 func fire(angle):

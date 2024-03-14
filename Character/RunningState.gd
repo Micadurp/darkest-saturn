@@ -16,7 +16,7 @@ func state_process(_delta, direction):
 		next_state = air_state
 	else:
 		if direction.x != 0:
-			# check if we're pressing the opposite direction and start braking
+			# check if we're `essing the opposite direction and start braking
 			#if (direction.x * character.local_velocity.x < 0):
 				#next_state = braking_state
 			# apply velocity

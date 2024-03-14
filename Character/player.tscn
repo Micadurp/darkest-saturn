@@ -330,10 +330,11 @@ running_state = NodePath("../Running")
 slide_state = NodePath("../Sliding")
 runstart_state = NodePath("../RunStart")
 
-[node name="Air" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("ground_state", "running_state")]
+[node name="Air" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("ground_state", "running_state", "sliding_state")]
 script = ExtResource("6_stw0j")
 ground_state = NodePath("../Ground")
 running_state = NodePath("../Running")
+sliding_state = NodePath("../Sliding")
 
 [node name="Running" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("air_state", "ground_state", "slide_state")]
 script = ExtResource("11_22h3l")

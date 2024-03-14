@@ -4,6 +4,7 @@ class_name CharacterStateMachine
 
 @export var character : CharacterBody2D
 @export var current_state : State
+#@export var last_state : State
 @export var animation_tree : AnimationTree
 
 var states : Array[State]
@@ -37,6 +38,9 @@ func switch_states(new_state : State):
 		# Making sure it doesn't immediately try https://github.com/coatlessali/darkest-saturnto switch into the same state AGAIN
 		current_state.next_state = null
 	# The great switching of states occurs
+	#print(current_state)
+	character.last_state = current_state
+	#print(current_state.last_state)
 	current_state = new_state
 	# Calls enter functions for new state
 	current_state.on_enter()
