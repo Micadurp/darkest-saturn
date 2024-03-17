@@ -1452,7 +1452,6 @@ camera = NodePath("../Camera2D")
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("character")]
 position = Vector2(-176, 59)
-zoom = Vector2(1.16, 1.16)
 process_callback = 0
 script = ExtResource("4_xtnno")
 character = NodePath("../Player")
@@ -1468,6 +1467,10 @@ shape = SubResource("RectangleShape2D_4xa2w")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CameraYTrigger"]
 position = Vector2(558, 43)
 shape = SubResource("RectangleShape2D_xtx5y")
+
+[node name="Met" type="CharacterBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Met"]
 
 [connection signal="body_entered" from="DEATH BOX OF DOOM" to="Player" method="_on_death_box_of_doom_body_entered"]
 [connection signal="body_entered" from="CameraYTrigger" to="Player" method="_on_camera_y_trigger_body_entered"]
