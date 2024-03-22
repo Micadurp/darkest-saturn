@@ -3,6 +3,9 @@ extends Node
 class_name CharacterStateMachine
 
 @export var character : CharacterBody2D
+@export var hurtbox : CollisionShape2D
+@export var hurtbox_sprite : Sprite2D
+@export var slidecast : ShapeCast2D
 @export var current_state : State
 #@export var last_state : State
 @export var animation_tree : AnimationTree

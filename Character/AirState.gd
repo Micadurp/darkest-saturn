@@ -53,6 +53,7 @@ func state_input(event : InputEvent):
 
 func on_enter():
 	# Determines whether to jump with sliding speed
+	playback.travel("jump")
 	if(character.last_state == sliding_state):
 		print("Slidehop")
 		air_velocity = character.slide_velocity

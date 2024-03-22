@@ -19,11 +19,16 @@ func state_process(_delta, direction):
 		#dsprint(last_state)
 	if(!character.is_on_floor()):
 		next_state = air_state
+		if slidecast.is_colliding():
+			# janky workaround for getting stuck in the ceiling after sliding off an edge while under a ceiling
+			character.position.y += 14
 	else:
 		timer -= 1
 		# check if we're pressing anything and transition into running
 		if timer <= 0:
-			if sign(direction.x)*slide_dir == 1:
+			if slidecast.is_colliding():
+				return
+			elif sign(direction.x)*slide_dir == 1:
 				next_state = running_state
 			else:
 				next_state = ground_state
@@ -31,16 +36,22 @@ func state_process(_delta, direction):
 		# checking if pressing opposite direction
 		#print(sign(direction.x)*sign(character.last_faced))
 		if sign(direction.x)*slide_dir == -1:
-			#character.local_velocity.x = move_toward(character.local_velocity.x, character.local_velocity_cap*sign(direction.x), character.speed)
-			#character.local_velocity.x = slide_velocity*sign(direction.x) 
-			next_state = ground_state
-			playback.travel("idle")
+			if slidecast.is_colliding():
+				slide()
+			else:
+				#character.local_velocity.x = move_toward(character.local_velocity.x, character.local_velocity_cap*sign(direction.x), character.speed)
+				#character.local_velocity.x = slide_velocity*sign(direction.x) 
+				next_state = ground_state
+				playback.travel("idle")
 		else:
 			character.local_velocity.x = character.slide_velocity*sign(character.last_faced)
 
 func state_input(event : InputEvent):
 	if event.is_action_pressed("jump"):
-		jump()
+		if slidecast.is_colliding():
+			return
+		else:
+			jump()
 	if event.is_action_pressed("slide"):
 		slide()
 	if event.is_action_pressed("fire"):
@@ -55,6 +66,17 @@ func state_input(event : InputEvent):
 func on_enter():
 	timer = 30
 	slide_dir = character.last_faced
+	slide_hurtbox.disabled = false
+	hurtbox.disabled = true
+	#hurtbox.scale.y = 0.1
+	#hurtbox.position.y += 21
+
+func on_exit():
+	slide_hurtbox.disabled = true
+	hurtbox.disabled = false
+	#hurtbox.scale.y = 1
+	#hurtbox.position.y -= 21
+	pass
 
 func jump():
 	character.local_velocity.y = character.jump_velocity

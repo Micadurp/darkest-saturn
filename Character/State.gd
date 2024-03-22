@@ -3,6 +3,10 @@ extends Node
 class_name State
 
 @export var character : CharacterBody2D
+@export var hurtbox : CollisionShape2D
+@export var hurtbox_sprite : Sprite2D
+@export var slide_hurtbox : CollisionShape2D
+@export var slidecast : ShapeCast2D
 var next_state : State
 var last_state : State
 @export var can_move : bool = true

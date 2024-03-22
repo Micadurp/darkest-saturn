@@ -45,7 +45,10 @@ func state_input(event : InputEvent):
 			# WHAT THE FUCK IS A RADIAN?!
 			fire_funne = 3.1415926536
 		fire(fire_funne)
-	
+
+func on_enter():
+	playback.travel("run")
+
 func jump():
 	character.local_velocity.y = character.jump_velocity
 	next_state = air_state

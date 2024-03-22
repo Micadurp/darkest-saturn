@@ -43,7 +43,7 @@ func state_input(event : InputEvent):
 func jump():
 	character.local_velocity.y = character.jump_velocity
 	next_state = air_state
-	playback.travel("jump_end")
+	playback.travel("jump")
 
 func slide():
 	character.local_velocity.x = slide_velocity*sign(character.last_faced)
@@ -55,5 +55,5 @@ func fire(angle):
 	var bullet = load("Bullet.tscn").instantiate()
 	bullet.direction = direction
 	get_parent().add_child(bullet)
-	bullet.position = character.position + Vector2(0, -10)
+	bullet.position = character.position + Vector2(character.last_faced*6, -4)
 
