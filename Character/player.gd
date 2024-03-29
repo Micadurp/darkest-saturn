@@ -53,7 +53,7 @@ func update_facing_direction(direction):
 	if direction.x > 0:
 		sprite.flip_h = false
 	elif direction.x < 0:
-		sprite.flip_h = true	
+		sprite.flip_h = true
 
 func _on_death_box_of_doom_body_entered(body):
 	print("ENTERED")
