@@ -18,7 +18,7 @@ radius = 7.0
 height = 46.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_crd0r"]
-size = Vector2(22.2222, 40)
+size = Vector2(22.2222, 41)
 
 [sub_resource type="Animation" id="Animation_hdldd"]
 length = 0.001
@@ -280,7 +280,7 @@ shape = SubResource("CapsuleShape2D_ta1mu")
 disabled = true
 
 [node name="StandingHurtbox" type="CollisionShape2D" parent="."]
-position = Vector2(0, 2)
+position = Vector2(0, 2.5)
 scale = Vector2(0.9, 1)
 shape = SubResource("RectangleShape2D_crd0r")
 

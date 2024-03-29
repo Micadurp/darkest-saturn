@@ -1450,10 +1450,6 @@ layer_0/tile_data = PackedInt32Array(393216, 65536, 1, 458752, 65536, 2, 524288,
 [node name="Player" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("2_t7emj")]
 position = Vector2(-127, 56)
 camera = NodePath("../Camera2D")
-speed = 120.0
-slide_velocity = 200.0
-friction = 5.0
-local_velocity_cap = 250.0
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("character")]
 position = Vector2(-176, 59)
