@@ -1458,6 +1458,7 @@ script = ExtResource("4_xtnno")
 character = NodePath("../Player")
 
 [node name="DEATH BOX OF DOOM" type="Area2D" parent="."]
+position = Vector2(-1, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DEATH BOX OF DOOM"]
 position = Vector2(-242.75, 748)
@@ -1470,6 +1471,7 @@ position = Vector2(558, 43)
 shape = SubResource("RectangleShape2D_xtx5y")
 
 [node name="Met" parent="." instance=ExtResource("5_63cyo")]
+position = Vector2(178, 11)
 
 [connection signal="body_entered" from="DEATH BOX OF DOOM" to="Player" method="_on_death_box_of_doom_body_entered"]
 [connection signal="body_entered" from="CameraYTrigger" to="Player" method="_on_camera_y_trigger_body_entered"]

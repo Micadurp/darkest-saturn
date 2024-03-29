@@ -11,7 +11,7 @@ var next_state : State
 var last_state : State
 @export var can_move : bool = true
 var playback : AnimationNodeStateMachinePlayback
-@onready var state_machine : CharacterStateMachine = $CharacterStateMachine
+@onready var state_machine : CharacterStateMachine = $MetStateMachine
 
 var shoot_timer : int = 0
 
