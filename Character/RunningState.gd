@@ -31,6 +31,7 @@ func state_process(_delta, direction):
 			#else:
 				#next_state = braking_state
 				#playback.travel("idle")
+	shoot_anim_timer("run")
 
 func state_input(event : InputEvent):
 	if event.is_action_pressed("jump"):
@@ -45,6 +46,8 @@ func state_input(event : InputEvent):
 			# WHAT THE FUCK IS A RADIAN?!
 			fire_funne = 3.1415926536
 		fire(fire_funne)
+		
+		shoot_anim("run_shoot")
 
 func on_enter():
 	playback.travel("run")
@@ -52,15 +55,16 @@ func on_enter():
 func jump():
 	character.local_velocity.y = character.jump_velocity
 	next_state = air_state
-	playback.travel("jump_start")
+	#playback.travel("jump")
 
 func slide():
 	character.local_velocity.x = slide_velocity*sign(character.last_faced)
 	next_state = slide_state
+	#playback.travel("slide")
 
 func fire(angle):
 	var direction = Vector2(1.0,0.0).rotated(angle).normalized()
 	var bullet = load("Bullet.tscn").instantiate()
 	bullet.direction = direction
 	get_parent().add_child(bullet)
-	bullet.position = character.position + Vector2(character.last_faced*20, -10)
+	bullet.position = character.position + Vector2(character.last_faced*23, -0)

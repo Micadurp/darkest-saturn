@@ -29,11 +29,8 @@ func state_process(delta, direction):
 			pass
 		#character.local_velocity.x = character.speed*sign(direction.x)
 		character.local_velocity.x = air_velocity*sign(direction.x)
-		#if (direction.x * character.local_velocity.x < 0) or (direction.x == 0):
-		## air friction yippee!!! time to add the boost
-			#character.local_velocity.x = move_toward(character.local_velocity.x, 0, character.friction*1)
-		#else:
-			#character.local_velocity.x = move_toward(character.local_velocity.x, character.local_velocity_cap*sign(direction.x), character.speed)
+		
+	shoot_anim_timer("jump") # State.gd
 
 func state_input(event : InputEvent):
 	#if (event.is_action_pressed("jump") && !has_double_jumped):
@@ -50,6 +47,8 @@ func state_input(event : InputEvent):
 			# WHAT THE FUCK IS A RADIAN?!
 			fire_funne = 3.1415926536
 		fire(fire_funne)
+		
+		shoot_anim("jump_shoot") # State.gd
 
 func on_enter():
 	# Determines whether to jump with sliding speed
@@ -71,4 +70,4 @@ func fire(angle):
 	var bullet = load("Bullet.tscn").instantiate()
 	bullet.direction = direction
 	get_parent().add_child(bullet)
-	bullet.position = character.position + Vector2(0, -10)
+	bullet.position = character.position + Vector2(character.last_faced*20, -10)

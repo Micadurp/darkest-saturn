@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://crqp5awdqgkxg"]
 
 [ext_resource type="Script" path="res://Bullet.gd" id="1_soppk"]
-[ext_resource type="Texture2D" uid="uid://c6t1khrom7r7a" path="res://Art/bullet.png" id="2_kobyr"]
+[ext_resource type="Texture2D" uid="uid://c0xqtlsrcqly1" path="res://Art/mega_bullet.png" id="2_j7mcj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7cksh"]
 size = Vector2(6, 6)
@@ -11,7 +11,7 @@ script = ExtResource("1_soppk")
 visibility = NodePath("VisibleOnScreenNotifier2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_kobyr")
+texture = ExtResource("2_j7mcj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_7cksh")

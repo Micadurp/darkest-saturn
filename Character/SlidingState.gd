@@ -45,6 +45,7 @@ func state_process(_delta, direction):
 				playback.travel("idle")
 		else:
 			character.local_velocity.x = character.slide_velocity*sign(character.last_faced)
+	shoot_anim_timer("slide")
 
 func state_input(event : InputEvent):
 	if event.is_action_pressed("jump"):
@@ -62,6 +63,8 @@ func state_input(event : InputEvent):
 			# WHAT THE FUCK IS A RADIAN?!
 			fire_funne = 3.1415926536
 		fire(fire_funne)
+		
+		shoot_anim("slide_shoot")
 	
 func on_enter():
 	timer = 30
@@ -70,6 +73,7 @@ func on_enter():
 	hurtbox.disabled = true
 	#hurtbox.scale.y = 0.1
 	#hurtbox.position.y += 21
+	playback.travel("slide")
 
 func on_exit():
 	slide_hurtbox.disabled = true
@@ -81,7 +85,7 @@ func on_exit():
 func jump():
 	character.local_velocity.y = character.jump_velocity
 	next_state = air_state
-	playback.travel("jump_end")
+	playback.travel("jump")
 
 func slide(): # Do we wanna remove this???
 	character.local_velocity.x = character.slide_velocity*sign(character.last_faced)
@@ -92,4 +96,4 @@ func fire(angle):
 	var bullet = load("Bullet.tscn").instantiate()
 	bullet.direction = direction
 	get_parent().add_child(bullet)
-	bullet.position = character.position + Vector2(0, -10)
+	bullet.position = character.position + Vector2(character.last_faced*10, 8)

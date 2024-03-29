@@ -13,6 +13,8 @@ var last_state : State
 var playback : AnimationNodeStateMachinePlayback
 @onready var state_machine : CharacterStateMachine = $CharacterStateMachine
 
+var shoot_timer : int = 0
+
 # set up processes for other states to inherit
 
 func state_process(_delta, _direction):
@@ -42,3 +44,16 @@ func force_positive(pval):
 		return pval*-1
 	elif pval > 0:
 		return pval
+
+func shoot_anim_timer(anim):
+	# this is so fucking dumb oh my god why could i not find any results on how to use the fucking advance_condition() this might actually be the worst code i've ever written
+	if shoot_timer > 0:
+		shoot_timer -= 1
+	print(shoot_timer)
+	if shoot_timer == 0:
+		playback.travel(anim)
+
+func shoot_anim(anim):
+	# stupid dumb shoot animation
+	shoot_timer = 20
+	playback.travel(anim)

@@ -10,6 +10,8 @@ class_name CharacterStateMachine
 #@export var last_state : State
 @export var animation_tree : AnimationTree
 
+var shoot : int = 0
+
 var states : Array[State]
 
 func _ready():

@@ -15,13 +15,12 @@ Darkest Saturn is the working title for an upcoming Rockman fan game.
 * make buster only provide 3 projectiles at a time
 * make buster work in all states
 * slide jump momentum
+* fix the stupid fucking animationtree not doing the god damned thing it's supposed to
 #### Near future:
 * make buster collide with enemies
-* fix the stupid fucking animationtree not doing the god damned thing it's supposed to
-#### Later:
 * add an enemy to fight
 * add an attack for that enemy
-#### Just a bit Later:
+#### Later:
 * add a robot master
 #### Even LATER:
 * finish a complete level with enemies to fight, decent level design, demonstrations of core gameplay mechanics, and an end goal

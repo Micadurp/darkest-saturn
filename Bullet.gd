@@ -1,8 +1,9 @@
 extends Area2D
 
+@onready var sprite : Sprite2D = $Sprite2D
 @export var visibility : VisibleOnScreenNotifier2D
 var direction = Vector2(1.0,0.0)
-var speed = 300.0
+var speed = 350.0
 
 func _ready():
 	add_to_group("Bullets")
@@ -13,6 +14,7 @@ func _ready():
 
 func _process(delta):
 	position = position + speed * direction * delta
+	sprite.flip_h = (direction.x == -1.0) # flips the sprite if moving left
 #some collision detection stuff here
 
 func _on_visible_on_screen_notifier_2d_screen_exited():

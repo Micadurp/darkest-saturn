@@ -19,7 +19,6 @@ var environmental_velocity : Vector2 = Vector2.ZERO
 var moving_direction : bool = true
 var last_faced : int = 1
 var owie : bool = false
-
 func _ready():
 	print("i was never book smart, im money smart")
 	animation_tree.active = true
@@ -27,7 +26,6 @@ func _ready():
 func _physics_process(_delta):
 	#print(last_faced)
 	input_direction = Input.get_vector("left", "right", "up", "down")
-	
 	# unused, might be useful later
 	if input_direction.x != 0 && state_machine.check_if_can_move():
 		if input_direction.x > 0:

@@ -55,7 +55,7 @@ func state_input(event : InputEvent):
 func jump():
 	character.local_velocity.y = character.jump_velocity
 	next_state = air_state
-	playback.travel("jump_start")
+	playback.travel("jump")
 
 func slide():
 	character.local_velocity.x = slide_velocity*sign(character.last_faced)
