@@ -17,9 +17,8 @@
 radius = 7.0
 height = 46.0
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ry2ya"]
-radius = 8.0
-height = 44.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_crd0r"]
+size = Vector2(22.2222, 40)
 
 [sub_resource type="Animation" id="Animation_hdldd"]
 length = 0.001
@@ -54,6 +53,22 @@ tracks/0/keys = {
 "values": [0]
 }
 
+[sub_resource type="Animation" id="Animation_tpvpa"]
+resource_name = "idle_shoot"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [1, 1]
+}
+
 [sub_resource type="Animation" id="Animation_17kp6"]
 resource_name = "jump"
 loop_mode = 1
@@ -68,6 +83,21 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [6]
+}
+
+[sub_resource type="Animation" id="Animation_vsl18"]
+resource_name = "jump_shoot"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [7]
 }
 
 [sub_resource type="Animation" id="Animation_rjb5r"]
@@ -87,6 +117,21 @@ tracks/0/keys = {
 "values": [2]
 }
 
+[sub_resource type="Animation" id="Animation_v10w4"]
+resource_name = "run_shoot"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [3]
+}
+
 [sub_resource type="Animation" id="Animation_k7ea8"]
 resource_name = "slide"
 loop_mode = 1
@@ -103,21 +148,6 @@ tracks/0/keys = {
 "values": [4]
 }
 
-[sub_resource type="Animation" id="Animation_vsl18"]
-resource_name = "jump_shoot"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [7]
-}
-
 [sub_resource type="Animation" id="Animation_pml56"]
 resource_name = "slide_shoot"
 tracks/0/type = "value"
@@ -131,37 +161,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [5]
-}
-
-[sub_resource type="Animation" id="Animation_v10w4"]
-resource_name = "run_shoot"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [3]
-}
-
-[sub_resource type="Animation" id="Animation_tpvpa"]
-resource_name = "idle_shoot"
-length = 0.3
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [1, 1]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_dvj6t"]
@@ -281,8 +280,9 @@ shape = SubResource("CapsuleShape2D_ta1mu")
 disabled = true
 
 [node name="StandingHurtbox" type="CollisionShape2D" parent="."]
-position = Vector2(0, 1)
-shape = SubResource("CapsuleShape2D_ry2ya")
+position = Vector2(0, 2)
+scale = Vector2(0.9, 1)
+shape = SubResource("RectangleShape2D_crd0r")
 
 [node name="AnimationTree" type="AnimationTree" parent="." node_paths=PackedStringArray("state_machine", "player")]
 libraries = {
@@ -307,11 +307,10 @@ offset = Vector2(5, 0)
 hframes = 2
 vframes = 4
 
-[node name="CharacterStateMachine" type="Node" parent="." node_paths=PackedStringArray("character", "hurtbox", "hurtbox_sprite", "current_state", "animation_tree")]
+[node name="CharacterStateMachine" type="Node" parent="." node_paths=PackedStringArray("character", "hurtbox", "current_state", "animation_tree")]
 script = ExtResource("4_i4vv3")
 character = NodePath("..")
 hurtbox = NodePath("../StandingHurtbox")
-hurtbox_sprite = NodePath("")
 current_state = NodePath("Ground")
 animation_tree = NodePath("../AnimationTree")
 
@@ -334,7 +333,7 @@ air_state = NodePath("../Air")
 ground_state = NodePath("../Ground")
 slide_state = NodePath("../Sliding")
 
-[node name="Sliding" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("air_state", "running_state", "slide_state", "ground_state", "runstart_state", "hurtbox", "hurtbox_sprite", "slide_hurtbox", "slidecast")]
+[node name="Sliding" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("air_state", "running_state", "slide_state", "ground_state", "runstart_state", "hurtbox", "slide_hurtbox", "slidecast")]
 script = ExtResource("12_skwc6")
 air_state = NodePath("../Air")
 running_state = NodePath("../Running")
@@ -342,7 +341,6 @@ slide_state = NodePath(".")
 ground_state = NodePath("../Ground")
 runstart_state = NodePath("../RunStart")
 hurtbox = NodePath("../../StandingHurtbox")
-hurtbox_sprite = NodePath("")
 slide_hurtbox = NodePath("../../SlideHurtbox")
 slidecast = NodePath("../../SlideCast")
 
