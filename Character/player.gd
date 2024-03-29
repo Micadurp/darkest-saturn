@@ -9,7 +9,7 @@ extends CharacterBody2D
 @onready var animation_tree : AnimationTree = $AnimationTree
 @onready var state_machine : CharacterStateMachine = $CharacterStateMachine
 # Get the gravity from the project settings to be synced with RigidBody nodes.
-@export var jump_velocity : float = -250
+@export var jump_velocity : float = -255
 var last_state : State
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var input_direction : Vector2

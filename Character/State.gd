@@ -49,7 +49,7 @@ func shoot_anim_timer(anim):
 	# this is so fucking dumb oh my god why could i not find any results on how to use the fucking advance_condition() this might actually be the worst code i've ever written
 	if shoot_timer > 0:
 		shoot_timer -= 1
-	print(shoot_timer)
+	#print(shoot_timer)
 	if shoot_timer == 0:
 		playback.travel(anim)
 
