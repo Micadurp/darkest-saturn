@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://dmmkegp00cl18"]
+[gd_scene load_steps=10 format=3 uid="uid://dmmkegp00cl18"]
 
 [ext_resource type="Texture2D" uid="uid://cnb6vef35n3ad" path="res://Art/Legacy-Fantasy - High Forest 2.3/Assets/Tiles.png" id="1_eqpw1"]
 [ext_resource type="Texture2D" uid="uid://cqrqnlx2jpsop" path="res://Art/Legacy-Fantasy - High Forest 2.3/Background/Background.png" id="1_uo41u"]
 [ext_resource type="PackedScene" uid="uid://xxaoff7gwbrm" path="res://Character/player.tscn" id="2_t7emj"]
 [ext_resource type="Script" path="res://Levels/Camera2D.gd" id="4_xtnno"]
+[ext_resource type="PackedScene" uid="uid://djfulrhk5k7cg" path="res://met.tscn" id="5_63cyo"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_x01cw"]
 texture = ExtResource("1_eqpw1")
@@ -1468,9 +1469,7 @@ shape = SubResource("RectangleShape2D_4xa2w")
 position = Vector2(558, 43)
 shape = SubResource("RectangleShape2D_xtx5y")
 
-[node name="Met" type="CharacterBody2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Met"]
+[node name="Met" parent="." instance=ExtResource("5_63cyo")]
 
 [connection signal="body_entered" from="DEATH BOX OF DOOM" to="Player" method="_on_death_box_of_doom_body_entered"]
 [connection signal="body_entered" from="CameraYTrigger" to="Player" method="_on_camera_y_trigger_body_entered"]
