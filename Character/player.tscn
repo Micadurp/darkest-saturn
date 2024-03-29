@@ -266,7 +266,6 @@ graph_offset = Vector2(15, -78.0993)
 
 [node name="Player" type="CharacterBody2D" groups=["Bullets"]]
 script = ExtResource("1_flj5s")
-jump_velocity = -250.0
 
 [node name="SlideCast" type="ShapeCast2D" parent="."]
 position = Vector2(0, 8)

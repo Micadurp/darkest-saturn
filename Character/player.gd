@@ -9,7 +9,7 @@ extends CharacterBody2D
 @onready var animation_tree : AnimationTree = $AnimationTree
 @onready var state_machine : CharacterStateMachine = $CharacterStateMachine
 # Get the gravity from the project settings to be synced with RigidBody nodes.
-@export var jump_velocity : float
+@export var jump_velocity : float = -250
 var last_state : State
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var input_direction : Vector2
@@ -19,6 +19,7 @@ var environmental_velocity : Vector2 = Vector2.ZERO
 var moving_direction : bool = true
 var last_faced : int = 1
 var owie : bool = false
+
 func _ready():
 	print("i was never book smart, im money smart")
 	animation_tree.active = true
