@@ -1,20 +1,21 @@
 extends CharacterBody2D
 
 @export var speed : float = 120
+@export var speed_delta : float = 60
 @export var active_box : CollisionShape2D
 @export var sprite : Sprite2D
 @onready var animation_tree : AnimationTree = $AnimationTree
 @export var sound : AudioStreamPlayer2D
 @export var hp : int = 1
+@export var bullets_max : int = 3
+
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
-# true for right, false for left
-var moving_direction : bool = true
-var facing : bool = false
-var state = "inactive"
+var moving_direction : int = DDirection.RIGHT
+var facing : int = DDirection.LEFT
+var state = DStates.INACTIVE
 var inactive_timer = 60
 var active_timer = 20
 var delay_timer = 30
-var dir : int
 var bullets_fired : int = 0
 
 func _ready():
@@ -22,76 +23,71 @@ func _ready():
 	pass
 
 func _physics_process(_delta):
-	if hp < 1:
+	if hp <= 0:
 		queue_free()
-	if facing == true:
+	if facing == DDirection.RIGHT:
 		sprite.flip_h = true
 	else:
 		sprite.flip_h = false
 	match state:
-		"active":
+		DStates.ACTIVE:
 			if inactive_timer > 0:
 				inactive_timer -= 1
 				return
 			else:
-				remove_from_group("Deflect")
-				add_to_group("Enemy")
-				if facing == true:
-					speed = 60
+				remove_from_group(DGroups.DEFLECT)
+				add_to_group(DGroups.ENEMY)
+				if facing == DDirection.RIGHT:
+					speed = speed_delta
 				else:
-					speed = -60
-				if bullets_fired >= 3:
+					speed = -speed_delta
+				if bullets_fired >= bullets_max:
 					if delay_timer > 0:
 						delay_timer -= 1
 					else:
-						state = "inactive"
+						state = DStates.INACTIVE
 						delay_timer = 0
 				else:
 					if active_timer > 0:
 						active_timer -=1
 					else:
-						fire(3.14)
+						fire(PI)
 						bullets_fired += 1
 						active_timer = 20
-		"inactive":
-			remove_from_group("Enemy")
-			add_to_group("Deflect")
+		DStates.INACTIVE:
+			remove_from_group(DGroups.ENEMY)
+			add_to_group(DGroups.DEFLECT)
 		_:
 			pass
-	
+
 	if is_on_floor():
 		pass
 	else:
 		velocity.y += gravity
-	
+
 	move_and_slide()
 
 
 
 func _on_area_2d_body_entered(body):
-	if body.is_in_group("Player"):
-		print("eek!")
+	if body.is_in_group(DGroups.PLAYER):
+		print_debug("eek!")
 		if body.position.x <= position.x:
-			print("left")
-			facing = false
+			print_debug("left")
+			facing = DDirection.LEFT
 		else:
-			print("right")
-			facing = true
-		state = "active"
+			print_debug("right")
+			facing = DDirection.RIGHT
+		state = DStates.ACTIVE
 		sound.play(0)
 
 
 func _on_hurtbox_area_entered(area):
-	if area.is_in_group("Bullets") and state == "active":
+	if area.is_in_group(DGroups.BULLETS) and state == DStates.ACTIVE:
 		hp -= 1
 
 func fire(angle):
-	var direction = Vector2(1.0,0.0).rotated(angle).normalized()
 	var bullet = load("res://Enemy/Met/MetBullet.tscn").instantiate()
-	bullet.direction = direction
 	get_parent().add_child(bullet)
-	if facing == true:
-		dir = 1
-	else:
-		dir = -1
-	bullet.position = position + Vector2(dir*1, 0)
+	bullet.direction = Vector2.RIGHT.rotated(angle).normalized()
+	bullet.position = position + Vector2(facing*1, 0)

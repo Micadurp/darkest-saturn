@@ -45,11 +45,10 @@ func state_input(event : InputEvent):
 		slide()
 	if event.is_action_pressed("fire"):
 		var fire_funne = 69
-		if character.last_faced > 0:
+		if character.last_faced == DDirection.RIGHT:
 			fire_funne = 0
-		elif character.last_faced < 0:
-			# WHAT THE FUCK IS A RADIAN?!
-			fire_funne = 3.1415926536
+		elif character.last_faced == DDirection.LEFT:
+			fire_funne = deg_to_rad(180)
 		fire(fire_funne)
 	
 func jump():
@@ -62,8 +61,7 @@ func slide():
 	next_state = slide_state
 
 func fire(angle):
-	var direction = Vector2(1.0,0.0).rotated(angle).normalized()
 	var bullet = load("Bullet.tscn").instantiate()
-	bullet.direction = direction
+	bullet.direction = Vector2.RIGHT.rotated(angle).normalized()
 	get_parent().add_child(bullet)
 	bullet.position = character.position + Vector2(character.last_faced*20, -10)

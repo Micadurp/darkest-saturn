@@ -17,7 +17,7 @@ func state_process(delta, direction):
 		character.local_velocity.y = 0
 		if Input.is_action_pressed("slide"):
 			next_state = sliding_state
-		elif direction.x != 0:
+		elif direction.x != DDirection.NONE:
 			next_state = running_state
 		else:
 			next_state = ground_state
@@ -41,11 +41,10 @@ func state_input(event : InputEvent):
 		character.local_velocity.y = 0
 	if event.is_action_pressed("fire"):
 		var fire_funne = 69
-		if character.last_faced > 0:
+		if character.last_faced == DDirection.RIGHT:
 			fire_funne = 0
-		elif character.last_faced < 0:
-			# WHAT THE FUCK IS A RADIAN?!
-			fire_funne = 3.1415926536
+		elif character.last_faced == DDirection.LEFT:
+			fire_funne = deg_to_rad(180) # PI or 3.1415926536
 		fire(fire_funne)
 		
 		shoot_anim("jump_shoot") # State.gd
@@ -54,7 +53,7 @@ func on_enter():
 	# Determines whether to jump with sliding speed
 	playback.travel("jump")
 	if(character.last_state == sliding_state):
-		print("Slidehop")
+		print_debug("Slidehop")
 		air_velocity = character.slide_velocity
 	else:
 		air_velocity = character.speed
@@ -66,8 +65,7 @@ func on_exit():
 		playback.travel("idle")
 
 func fire(angle):
-	var direction = Vector2(1.0,0.0).rotated(angle).normalized()
 	var bullet = load("Bullet.tscn").instantiate()
-	bullet.direction = direction
+	bullet.direction = Vector2.RIGHT.rotated(angle).normalized()
 	get_parent().add_child(bullet)
 	bullet.position = character.position + Vector2(character.last_faced*20, -10)
