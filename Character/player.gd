@@ -8,61 +8,58 @@ extends CharacterBody2D
 @onready var sprite : Sprite2D = $Sprite2D
 @onready var animation_tree : AnimationTree = $AnimationTree
 @onready var state_machine : CharacterStateMachine = $CharacterStateMachine
-# Get the gravity from the project settings to be synced with RigidBody nodes.
 @export var jump_velocity : float = -255
 var last_state : State
+# Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var input_direction : Vector2
 var local_velocity : Vector2 = Vector2.ZERO
 var environmental_velocity : Vector2 = Vector2.ZERO
-# true for right, false for left
-var moving_direction : bool = true
-var last_faced : int = 1
+var moving_direction : int = DDirection.RIGHT
+var last_faced : int = DDirection.RIGHT
 var owie : bool = false
 
 func _ready():
-	print("i was never book smart, im money smart")
+	print_debug("i was never book smart, im money smart")
 	animation_tree.active = true
 
 func _physics_process(_delta):
-	#print(last_faced)
+	# print_debug("player.gd: ", last_faced)
 	input_direction = Input.get_vector("left", "right", "up", "down")
 	# unused, might be useful later
-	if input_direction.x != 0 && state_machine.check_if_can_move():
-		if input_direction.x > 0:
-			last_faced = 1
-		elif input_direction.x < 0:
-			last_faced = -1
+	var x_direction = sign(input_direction.x)
+	if x_direction != DDirection.NONE && state_machine.check_if_can_move():
+		last_faced = x_direction
 		if !is_on_floor():
 			pass
-	
+
 	if is_on_floor():
 		pass
-	
+
 	# environmental velocity is controlled by objects in the environment, such as speed boosters, and naturally slows down
 	environmental_velocity.x = move_toward(environmental_velocity.x, 0, friction)
-	
+
 	velocity = local_velocity + environmental_velocity
 	move_and_slide()
 	update_animation(input_direction)
-	update_facing_direction(input_direction)
-	
+	update_facing_direction(x_direction)
+
 func update_animation(direction):
 	animation_tree.set("parameters/Move/blend_position", direction.x)
 
-func update_facing_direction(direction):
-	if direction.x > 0:
+func update_facing_direction(x_direction):
+	if x_direction == DDirection.RIGHT:
 		sprite.flip_h = false
-	elif direction.x < 0:
+	elif x_direction == DDirection.LEFT:
 		sprite.flip_h = true
 
 func _on_death_box_of_doom_body_entered(body):
-	print("ENTERED")
+	print_debug("Entered!")
 	position.x = 0
 	position.y = 0
 
 func _on_camera_y_trigger_body_entered(body):
-	print("ENTER2")
+	print_debug("Entered!")
 	camera.follow_y = true
 
 

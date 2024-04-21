@@ -10,7 +10,7 @@ var has_double_jumped = false
 
 func state_process(delta, direction):
 	if(character.is_on_floor()):
-		#print("floor")
+		#print_debug("floor")
 		character.local_velocity.y = 0
 		if direction.x != 0:
 			next_state = running_state
@@ -38,11 +38,10 @@ func state_input(event : InputEvent):
 		character.local_velocity.y = 0
 	if event.is_action_pressed("fire"):
 		var fire_funne = 69
-		if character.last_faced > 0:
+		if character.last_faced == DDirection.RIGHT:
 			fire_funne = 0
-		elif character.last_faced < 0:
-			# WHAT THE FUCK IS A RADIAN?!
-			fire_funne = 3.1415926536
+		elif character.last_faced == DDirection.LEFT:
+			fire_funne = rad_to_deg(180)
 		fire(fire_funne)
 
 func on_exit():
@@ -51,8 +50,7 @@ func on_exit():
 		playback.travel("idle")
 
 func fire(angle):
-	var direction = Vector2(1.0,0.0).rotated(angle).normalized()
 	var bullet = load("Bullet.tscn").instantiate()
-	bullet.direction = direction
+	bullet.direction = Vector2.RIGHT.rotated(angle).normalized()
 	get_parent().add_child(bullet)
 	bullet.position = character.position + Vector2(0, -10)

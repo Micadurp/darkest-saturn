@@ -26,16 +26,16 @@ func _ready():
 			child.playback = animation_tree["parameters/playback"]
 		else:
 			push_warning("Child " + child.name + " is not a State for CharacterStateMachine!")
-			
+
 func _physics_process(delta):
 	if (current_state.next_state != null):
 		switch_states(current_state.next_state)
-	
+
 	current_state.state_process(delta, character.input_direction)
 
 func check_if_can_move():
 	return current_state.can_move
-	
+
 func switch_states(new_state : State):
 	if (current_state != null):
 		# Calls exit functions
@@ -43,9 +43,9 @@ func switch_states(new_state : State):
 		# Making sure it doesn't immediately try https://github.com/coatlessali/darkest-saturnto switch into the same state AGAIN
 		current_state.next_state = null
 	# The great switching of states occurs
-	#print(current_state)
+	#print_debug(current_state)
 	character.last_state = current_state
-	#print(current_state.last_state)
+	#print_debug(current_state.last_state)
 	current_state = new_state
 	# Calls enter functions for new state
 	current_state.on_enter()

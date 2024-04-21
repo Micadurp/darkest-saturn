@@ -2,12 +2,12 @@ extends Area2D
 
 @onready var sprite : Sprite2D = $Sprite2D
 @export var visibility : VisibleOnScreenNotifier2D
+@export var speed = 200
 var deflected : bool = false
-var direction = Vector2(1.0,0.0)
-var speed = 200
+var direction = Vector2.RIGHT
 
 func _ready():
-	add_to_group("MetBullets")
+	add_to_group(DGroups.METBULLETS)
 
 func _process(delta):
 	for each in get_overlapping_bodies():
@@ -17,12 +17,12 @@ func _process(delta):
 				var random_angle = 2.5
 				if randf() < 0.5:
 					random_angle = 3.9
-				direction = Vector2(1.0,0.0).rotated(random_angle).normalized()
+				direction = Vector2.RIGHT.rotated(random_angle).normalized()
 		else:
 			pass
-	#print(deflects)
+	#print_debug(deflects)
 	position = position + speed * direction * delta
-	sprite.flip_h = (direction.x == -1.0) # flips the sprite if moving left
+	sprite.flip_h = (direction.x == DDirection.LEFT) # flips the sprite if moving left
 #some collision detection stuff here
 
 func _on_visible_on_screen_notifier_2d_screen_exited():

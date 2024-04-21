@@ -16,7 +16,7 @@ class_name SlideState
 func state_process(_delta, direction):
 	# you shouldn't be in the air!
 	#if last_state != null:
-		#dsprint(last_state)
+		#print_debug(last_state)
 	if(!character.is_on_floor()):
 		next_state = air_state
 		if slidecast.is_colliding():
@@ -34,7 +34,7 @@ func state_process(_delta, direction):
 				next_state = ground_state
 				playback.travel("idle")
 		# checking if pressing opposite direction
-		#print(sign(direction.x)*sign(character.last_faced))
+		#print_debug(sign(direction.x)*sign(character.last_faced))
 		if sign(direction.x)*slide_dir == -1:
 			if slidecast.is_colliding():
 				slide()
@@ -57,11 +57,10 @@ func state_input(event : InputEvent):
 		slide()
 	if event.is_action_pressed("fire"):
 		var fire_funne = 69
-		if character.last_faced > 0:
+		if character.last_faced == DDirection.RIGHT:
 			fire_funne = 0
-		elif character.last_faced < 0:
-			# WHAT THE FUCK IS A RADIAN?!
-			fire_funne = 3.1415926536
+		elif character.last_faced == DDirection.LEFT:
+			fire_funne = deg_to_rad(180)
 		fire(fire_funne)
 		
 		shoot_anim("slide_shoot")
@@ -92,7 +91,7 @@ func slide(): # Do we wanna remove this???
 	next_state = slide_state
 
 func fire(angle):
-	var direction = Vector2(1.0,0.0).rotated(angle).normalized()
+	var direction = Vector2.RIGHT.rotated(angle).normalized()
 	var bullet = load("Bullet.tscn").instantiate()
 	bullet.direction = direction
 	get_parent().add_child(bullet)
